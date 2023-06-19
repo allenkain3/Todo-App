@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+
+    <title>Todo App</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Todo App</h3>
+    <hr>
+
+    <!-- Add Button To Add Task-->
+    <a th:href="@{/todos/showFormToAdd}"
+       class="btn btn-info btn-sm mb-3">
+        Add Task
+
+    </a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Start Date</th>
+            <th>Task</th>
+            <th>Target Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempTodo : ${todos}">
+
+            <td th:text="${#dates.format(tempTodo.startDate,'MM/dd/yyyy')}"/>
+            <td th:text="${tempTodo.task}" />
+            <td th:text="${#dates.format(tempTodo.targetDate,'MM/dd/yyyy')}" />
+            <td th:text="${tempTodo.status}"/>
+            <td>
+                <a th:href="@{/todos/showFormForUpdate(todoId=${tempTodo.id})}"
+                   class="btn btn-info btn-sm">
+                    Update
+                </a>
+
+                <a th:href="@{/todos/delete(todoId=${tempTodo.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if(!(confirm('Are you sure you want to delete this task?'))) return false">
+                    Delete
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
